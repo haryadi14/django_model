@@ -1,5 +1,4 @@
-"""tutor URL Configuration
-
+"""DjangoProject URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
 Examples:
@@ -14,14 +13,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('about/', views.about),
-    path('blog/', include('blog.urls'))
+    path('', views.index, name='index'),
+    path('blog/', include('blog.urls', 'blog'), name='blog'),
+    path('about/', views.about, name='about'),
+    re_path(r'^articles/(?P<year>[0-9]{,10})/$', views.article, name='dynamic')
 ]
